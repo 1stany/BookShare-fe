@@ -1,0 +1,106 @@
+header {
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-block-end: 4em;
+    font-family: "Playwrite FR Moderne", cursive;
+    font-optical-sizing: auto;
+    margin-bottom: 90px;
+}
+
+h1 {
+    padding-top: 30px;
+    margin-bottom: 6em;
+}
+
+#logo{
+    width: 20em;
+    border-radius: 30%;
+}
+
+nav{
+    background:  rgba(7, 87, 0, 0.893);
+    padding: 1rem 0;
+    font-family: "Roboto";
+    font-size: large;
+    
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links li {
+    display: inline;
+    margin-left: 1rem;
+}
+
+.nav-links a {
+    color: #fff;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+
+.navbar-nav .nav-link:hover {
+    color: #080075; 
+    background-color: #00e727; 
+    border-radius: 4px; 
+    transition: all 0.3s ease; 
+    transform: scale(1.1);
+    font-size: 1.1rem;
+    font-weight: 2px;
+}
+
+.hero-content {
+    color: #033e08;
+    border: 1px solid black;
+    background: linear-gradient(135deg,  #43b600a3, rgba(9, 112, 0, 0.893));
+    padding-top: 2em;
+    font-family: "Playwrite FR Moderne";
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-family: "Playwrite FR Moderne";
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.register:hover {
+    background-color: #21df2a;
+    color: black;
+    transform: scale(1.05);
+  }
+
+  .register {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #132d83;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Arial', sans-serif;
+    margin-left: 10px;
+  }
+

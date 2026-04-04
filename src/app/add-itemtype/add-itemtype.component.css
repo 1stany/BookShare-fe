@@ -1,0 +1,105 @@
+.addTypeContainer {
+    background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    height: 250px;
+    margin: auto;
+    margin-bottom: 40px;
+    margin-top: 60px;
+  }
+
+  label {
+    font-family: "Playwrite FR Moderne";
+  }
+
+  
+  button {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #132d83;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Arial', sans-serif;
+    margin-top: 32px;
+  }
+
+  h3 {
+    font-family: "Playwrite FR Moderne";
+    font-size: 3em;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4);
+    margin: 0;
+    
+  }
+
+  #newType {
+    background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+    height: 50px;
+}
+
+  
+  button:hover {
+    background-color: #21df2a;
+    color: black;
+    transform: scale(1.05);
+    transition: background-color 0.3s, transform 0.3s; 
+  }
+  
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .form-group {
+    flex: 1 1 calc(50% - 15px);
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    
+  }
+
+  
+  #description {
+    flex: 1 1 calc(50% - 15px);
+    height: 100px;
+    width: 555px;
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+  }
+  
+  .form-group.full-width {
+    flex: 1 1 100%;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+
+
+
+
+  

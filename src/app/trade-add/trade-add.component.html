@@ -1,0 +1,56 @@
+@if(!isSubmitted){
+    <div class="tables-container">
+        <section>
+            <div id="myobj"><h3>Il mio oggetto</h3></div>
+            <table class="table table-striped-columns">
+                <tbody>
+                    <tr><td>NOME:</td><td>{{item?.name}}</td></tr>
+                    <tr><td>DESCRIZIONE:</td><td>{{item?.description}}</td></tr>
+                    <tr><td>STATO:</td><td>{{item?.activetrade}}</td></tr>
+                    <tr><td>CONDIZIONE:</td><td>{{item?.condition}}</td></tr>
+                    <tr><td>COMMENTO:</td><td>{{item?.conditionComment}}</td></tr>
+                    <tr><td>CATEGORIA:</td><td>{{item?.categoryName}}</td></tr>
+                    <tr><td>CITTA':</td><td>{{item?.ownerCityName}}</td></tr>
+                    <tr><td>DATA:</td><td>{{item?.creationDate}}</td></tr>
+                </tbody>
+            </table>  
+        </section>
+        <section>
+            <h3>Oggetto che vorrei</h3>
+            <table class="table table-striped-columns">
+                <tbody>
+                    <tr><td>NOME:</td><td>{{requestedItem?.name}}</td></tr>
+                    <tr><td>DESCRIZIONE:</td><td>{{requestedItem?.description}}</td></tr>
+                    <tr><td>STATO:</td><td>{{requestedItem?.activetrade}}</td></tr>
+                    <tr><td>CONDIZIONE:</td><td>{{requestedItem?.condition}}</td></tr>
+                    <tr><td>COMMENTO:</td><td>{{requestedItem?.conditionComment}}</td></tr>
+                    <tr><td>CATEGORIA:</td><td>{{requestedItem?.categoryName}}</td></tr>
+                    <tr><td>CITTA':</td><td>{{requestedItem?.ownerCityName}}</td></tr>
+                    <tr><td>DATA:</td><td>{{requestedItem?.creationDate}}</td></tr>
+                </tbody>
+            </table>  
+        </section>
+        </div>
+<div>
+
+    <div class="tradeContainer">
+        <form #tradeForm="ngForm" (ngSubmit)="onSubmit(tradeForm)">
+          <div class="form-group">
+            <label>*Data Proposta: <input type="date" name="exchangeDate" required ngModel></label>
+          </div>
+          <div class="btn"><button id="submit" type="submit">Invia la richiesta di scambio!</button></div>
+        </form>
+        <div class="btn"><button type="button" class="btn btn-secondary" routerLink= "/last">Indietro</button></div>
+    </div>
+</div>
+}     
+    <div class="visually-hidden-focusable" id="alertContainer">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Richiesta di scambio inviata!</h4>
+            <p id="alertext">Tieniti aggiornato sul nostro sito per controllare se la tua richiesta è stata accettata</p>
+            <hr>
+            <div id="btn">
+            <button type="button" class="btn btn-secondary" routerLink= "">Home</button>
+            </div>
+        </div>
+    </div>

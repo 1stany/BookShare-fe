@@ -1,0 +1,173 @@
+@if (!isSubmitted) {
+  <div id="newObj"><h3>Aggiungi un nuovo libro</h3></div>
+
+  @if (!isAuthenticated) {
+    <div class="m-4">
+      <div
+        id="alert"
+        class="alert alert-error"
+        role="alert"
+        style="
+          background-color: #f8d7da !important;
+          border-left: 4px solid #dc3545 !important;
+          border-radius: 4px !important;
+          margin: 0 !important;
+          padding: 1em !important;
+        "
+      >
+        <h4
+          class="alert-heading"
+          style="
+            color: #721c24 !important;
+            font-size: 1.5em !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          "
+        >
+          ⚠ Accesso negato
+        </h4>
+        <p style="color: #721c24 !important; margin: 0.5em 0 !important">
+          Devi effettuare il login per aggiungere un articolo.
+        </p>
+        <hr
+          style="border-color: #dc3545 !important; margin: 0.5em 0 !important"
+        />
+        <div class="mb-0" style="padding: 0 !important">
+          <div>
+            <button type="button" class="btn btn-secondary" routerLink="/login">
+              Vai al Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="registerContainer">
+      <form #addItemForm="ngForm" (ngSubmit)="onSubmit(addItemForm)">
+        <div class="form-group">
+          <label
+            >*Nome: <input type="text" name="name" required ngModel
+          /></label>
+        </div>
+
+        <div class="form-group">
+          <label>*Categoria:</label>
+          <select name="categoryName" required ngModel>
+            <option value="" disabled>Seleziona una categoria</option>
+            @for (category of categories; track category) {
+              <option [value]="category">{{ category }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label id="activetrade"
+            >*Pronto per lo scambio:
+            <div>
+              <input
+                type="radio"
+                class="btn-check"
+                name="activetrade"
+                id="option1"
+                autocomplete="off"
+                [value]="true"
+                checked
+                ngModel
+              />
+              <label class="btn btn-secondary ms-5 mt-3" for="option1"
+                >SI</label
+              >
+              <input
+                type="radio"
+                class="btn-check"
+                name="activetrade"
+                id="option2"
+                autocomplete="off"
+                [value]="false"
+                ngModel
+              />
+              <label class="btn btn-secondary ms-3 mt-3" for="option2"
+                >NO</label
+              >
+            </div>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>*Stato:</label>
+          <select name="condition" required ngModel="ottimo">
+            @for (condition of conditions; track $index) {
+              <option [ngValue]="condition">{{ condition }}</option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <label id="description"
+            >*Descrizione:
+            <input type="text" name="description" required ngModel
+          /></label>
+        </div>
+
+        <div>
+          <label id="description"
+            >Note sullo stato (opzionale):
+            <input type="text" name="conditionComment" ngModel
+          /></label>
+        </div>
+
+        <div class="form-group">
+          <label>Carica un'immagine per la copertina:</label>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+
+        @if (coverPreview) {
+          <div class="form-group">
+            <label>Anteprima copertina:</label>
+            <div style="margin-top: 10px">
+              <img
+                [src]="coverPreview"
+                alt="Anteprima copertina"
+                style="
+                  max-width: 200px;
+                  max-height: 250px;
+                  border-radius: 8px;
+                  object-fit: cover;
+                "
+              />
+            </div>
+          </div>
+        }
+
+        <div>
+          <div class="form-group">
+            <button id="submit" type="submit">CREA!</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  }
+}
+@if (isSubmitted) {
+  <div id="alert" class="alert alert" role="alert">
+    <h4 class="alert-heading">Oggetto creato!</h4>
+    <h6>il tuo libro è entrato a fare parte del nostro circuito del riuso</h6>
+    <p id="alertext">
+      Grazie al tuo impegno, hai contribuito alla sostenibilità e alla
+      protezione del nostro pianeta. Continuando così, insieme possiamo fare la
+      differenza per un futuro migliore!
+    </p>
+    <hr />
+    <div class="mb-0">
+      <div>
+        <button type="button" id="home" class="btn btn-secondary" routerLink="">
+          HOME
+        </button>
+      </div>
+    </div>
+  </div>
+}

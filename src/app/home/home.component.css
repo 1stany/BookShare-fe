@@ -1,0 +1,67 @@
+#logo {
+    height: 150px;
+
+}
+
+.card {
+    margin: 60px;
+}
+
+.card-body {
+    background: linear-gradient(40deg,rgba(58, 164, 50, 0.638), rgba(225, 235, 152, 0.803));
+}
+
+.card-text {
+    font-size: 1.4em;
+    padding-left: 6em;
+    padding-right: 6em;
+}
+
+h3 {
+    margin-top: 50px;
+    font-family: "Playwrite FR Moderne";
+    font-size: 3.5em;
+}
+
+.card-header, .card-footer {
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+}
+
+h6 {
+    font-family: "Playwrite FR Moderne";
+    padding-top: 1em;
+    padding-bottom: 3em;
+}
+
+.btn123 {
+    padding: 1rem 2rem;
+    background:#667255e3;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: background 0.3s;
+    margin-bottom: 2rem;
+}
+
+.btn{
+    font-size: 1.60rem; 
+    padding: 15px 25px;
+    border-radius: 20px; 
+    margin-block-end: 50px;
+}
+
+.btn:hover {
+    background: #86e600;
+    color: #080075;
+    font-weight: bold;
+    transform: scale(1.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button-container {
+    text-align: center;
+}

@@ -1,0 +1,129 @@
+<div id="Registrazione"><h3>Registrazione</h3></div>
+<div class="registerContainer">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="firstname" required />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Cognome</mat-label>
+        <input matInput formControlName="lastname" required />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="pat@example.com"
+          (blur)="updateErrorMessage(registerForm.get('email')!)"
+          required
+        />
+        @if (registerForm.get("email")!.hasError("required")) {
+          <mat-error>{{ errorMessage() }} </mat-error>
+        }
+        @if (registerForm.get("email")!.hasError("email")) {
+          <mat-error>{{ errorMessage() }} </mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Telefono</mat-label>
+        <input matInput formControlName="phone" />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Città</mat-label>
+        <mat-select formControlName="city" required>
+          @for (city of cities; track city.id) {
+            <mat-option [value]="city.name">{{ city.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Genere</mat-label>
+        <mat-select formControlName="gender" required>
+          <mat-option value="male">Maschio</mat-option>
+          <mat-option value="female">Femmina</mat-option>
+          <mat-option value="prefer not say">Preferisco non dirlo</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="example-full-width">
+        <mat-label>Choose a date</mat-label>
+        <input
+          matInput
+          [matDatepickerFilter]="myFilter"
+          [matDatepicker]="picker"
+          formControlName="date"
+          required
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+          formControlName="password"
+          required
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="clickEvent($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field id="description">
+        <mat-label
+          >Descrizione
+          <mat-hint
+            >{{ registerForm.get("description")?.value?.length || 0 }} /
+            128</mat-hint
+          ></mat-label
+        >
+        <textarea
+          matInput
+          formControlName="description"
+          id="inputDescription"
+          maxlength="128"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <button type="submit" [disabled]="!registerForm.valid">
+        REGISTRATI!
+      </button>
+    </div>
+  </form>
+</div>

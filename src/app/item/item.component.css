@@ -1,0 +1,59 @@
+tbody {
+    font-family: "Playwrite FR Moderne", cursive;
+}
+
+.change{
+    display: flex;
+    justify-content: center;
+}
+
+#trade {
+    font-size: 1.60rem; 
+    padding: 15px 25px;
+    border-radius: 10px; 
+    margin: 10px;
+}
+
+#dettagli{
+        background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+        height: 40px;
+        margin-bottom: 30px;
+        text-align: center;
+        font-family: "Playwrite FR Moderne", cursive;
+        font-size: 3rem;
+        color: white;
+        text-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4);
+      }
+
+.table {
+        display: flex;
+        justify-content: center;
+      }
+
+.btn-hover:hover {
+    background-color: #21df2a;
+    color: black;
+    transform: scale(1.1);
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.btn-hover2:hover{
+    transform: scale(1.08);
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 10px; 
+}
+
+.table tbody tr:last-child td:last-child {
+    border-radius: 0 0 10px 0; 
+}
+
+.table tr:first-child td:first-child{
+    border-radius: 10px 0 0 0; 
+}
+
+.table tr:first-child td:last-child{
+    border-radius: 0 10px 0 0;
+}

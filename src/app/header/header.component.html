@@ -1,0 +1,57 @@
+<header>
+    <div class="hero">
+        
+
+        <div class="hero-content">
+            <div class="row">
+              <div class="col-sm-3 p-0 m-5 mb-4 mt-0">
+                <img src="/imgs/logo.jpg"  class="img-thumbnail" alt="logo" id="logo">
+              </div>
+              <div class="col-sm-6">
+                  <div id="title">
+                    <h1>ReShare</h1>
+                  </div>
+                  <div id="text">
+                    <p>Scambia libri con la tua comunità in modo semplice e ecologico!</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" routerLink="">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" routerLink="last">Bacheca</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" routerLink="profile">Profilo</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" routerLink="add-item">Aggiungi libro</a>
+                  </li>
+                  <li class="nav-item">
+                  <li class="nav-item">
+                    <a class="nav-link active" routerLink="wishlist">Wishlist</a>
+                  </li>
+                </ul>
+                @if(isLogged){
+                  <button class="register" (click)="onLogout()">Log-out</button> 
+                } @else {
+                  <div>
+                    <a routerLink="register" class="register">Registrati</a>
+                    <a routerLink="login" class="register">Log-in</a>
+                  </div>                  
+                }
+              </div>
+            </div>
+          </nav>
+    </div>
+</header>

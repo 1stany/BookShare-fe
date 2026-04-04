@@ -1,0 +1,136 @@
+.tables-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 30px;
+}
+
+.tables-container section {
+  flex: 1;
+  max-width: 45%;
+}
+
+.table {
+  width: 100%; 
+}
+
+@media (max-width: 768px) {
+  .tables-container {
+    flex-direction: column;
+  }
+}
+
+h3, h4 {
+  font-family: "Playwrite FR Moderne";
+  font-size: 3em;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  margin-bottom: 2em;
+}
+
+
+.alert {
+  background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+  padding-top: 2em;
+}
+
+#alertext {
+  margin: 3em;
+  font-size: 20px;
+  margin-top: 3em;
+  margin-bottom: 0em;
+  font-family: Arial, Helvetica, sans-serif bold;
+  text-align: center;
+}
+
+#btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tradeContainer {
+    background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    margin: auto;
+    margin-bottom: 40px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+  }
+
+.btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+button {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Arial', sans-serif;
+    margin-top: 20px;
+  }
+
+  #submit {
+    background-color: #132d83;
+    width: 300px;
+    font-size: 1.3em;
+  }
+
+  #submit:hover {
+    background-color: #21df2a;
+    color: black;
+    transform: scale(1.10);
+  }
+
+  button:hover {
+    background-color: #878787;
+    color: black;
+    transform: scale(1.10);
+  }
+
+  label {
+    font-size: 18px;
+  }
+
+  form {
+    justify-content: center;
+  }
+
+  .table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 10px; 
+}
+
+.table tbody tr:last-child td:last-child {
+    border-radius: 0 0 10px 0; 
+}
+
+.table tr:first-child td:first-child{
+    border-radius: 10px 0 0 0; 
+}
+
+.table tr:first-child td:last-child{
+    border-radius: 0 10px 0 0;
+}
+  
+  

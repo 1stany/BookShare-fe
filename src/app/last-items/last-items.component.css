@@ -1,0 +1,148 @@
+#intestation {
+    font-family: "Playwrite FR Moderne", cursive;
+    background-color: transparent;
+}
+#tabody button{
+    font-family: "Playwrite FR Moderne", cursive;
+}
+
+table{
+    border-radius: 10%;
+    
+}
+
+#table {
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+.table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 10px; 
+}
+
+.table tbody tr:last-child td:last-child {
+    border-radius: 0 0 10px 0; 
+}
+
+.table th:first-child {
+    border-radius: 10px 0 0 0; 
+}
+
+.table th:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+/* Filters Styling */
+.filters-container {
+    background: linear-gradient(135deg, #f0f8ec, #ffffff);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid #d4e8d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 20px;
+}
+
+.filters-container h5 {
+    font-family: "Playwrite FR Moderne", cursive;
+    margin-bottom: 14px;
+    color: #2d8300;
+}
+
+.search-group {
+    margin-bottom: 12px;
+}
+
+.search-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d5f30;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.search-input {
+    border: 1px solid #c2d8b3;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.search-input:focus {
+    border-color: #2d8300;
+    box-shadow: 0 0 0 0.2rem rgba(45, 131, 0, 0.15);
+}
+
+.search-select {
+    border: 1px solid #c2d8b3;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #2d5f30;
+}
+
+.search-select:focus {
+    border-color: #2d8300;
+    box-shadow: 0 0 0 0.2rem rgba(45, 131, 0, 0.15);
+}
+
+.filter-divider {
+    border-color: #c2d8b3;
+    margin: 16px 0;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.category-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border-radius: 6px;
+    border: 1px solid #c2d8b3;
+    background: #f9fbf7;
+    color: #2d5f30;
+    font-size: 13px;
+    padding: 5px 10px;
+    transition: all 0.2s ease;
+}
+
+.category-btn:hover {
+    background: #e8f5e3;
+    border-color: #5fa35e;
+}
+
+.category-btn.active {
+    background: #2d8300;
+    color: #fff;
+    border-color: #2d8300;
+}
+
+.category-btn .badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    font-weight: 600;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 12px 0;
+    padding: 0 4px;
+}
+
+.results-header h5 {
+    font-family: "Playwrite FR Moderne", cursive;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .filters-container {
+        position: static;
+        margin-bottom: 18px;
+    }
+}

@@ -1,0 +1,178 @@
+<div class="container">
+  <div class="row mt-4">
+    <!-- Filters Section -->
+    <div class="col-md-3">
+      <div class="filters-container">
+        <!-- Search by name -->
+        <h5>Cerca</h5>
+        <div class="search-group">
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Cerca per nome..."
+            [(ngModel)]="searchName"
+            (ngModelChange)="applyFilter()"
+          />
+        </div>
+
+        <hr class="filter-divider" />
+
+        <h5>Filtri</h5>
+
+        <!-- Filter by city -->
+        <div class="search-group">
+          <label class="search-label">Città</label>
+          <select
+            class="form-select search-select"
+            [(ngModel)]="searchCity"
+            (ngModelChange)="applyFilter()"
+          >
+            <option [ngValue]="null">Tutte le città</option>
+            @for (city of cities; track city.id) {
+              <option [value]="city.name">{{ city.name }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Filter by trade -->
+        <div class="search-group">
+          <label class="search-label">Scambio</label>
+          <select
+            class="form-select search-select"
+            [(ngModel)]="searchTrade"
+            (ngModelChange)="applyFilter()"
+          >
+            <option value="all">Tutti</option>
+            <option value="true">Disponibile</option>
+            <option value="false">Non disponibile</option>
+          </select>
+        </div>
+
+        <!-- Filter by category -->
+        <div class="search-group">
+          <label class="search-label">Categoria</label>
+          <div class="category-list">
+            <button
+              type="button"
+              class="btn btn-sm category-btn w-100"
+              [class.active]="!selectedCategory"
+              (click)="selectedCategory = null; applyFilter()"
+            >
+              Tutte
+            </button>
+            @for (category of categories; track category) {
+              <button
+                type="button"
+                class="btn btn-sm category-btn w-100"
+                [class.active]="isSelected(category)"
+                (click)="filterByCategory(category)"
+              >
+                <span>{{ category }}</span>
+                <span class="badge bg-success">{{
+                  getCategoryCount(category)
+                }}</span>
+              </button>
+            }
+          </div>
+        </div>
+
+        @if (
+          selectedCategory || searchName || searchCity || searchTrade !== "all"
+        ) {
+          <button
+            class="btn btn-sm btn-secondary mt-3 w-100"
+            (click)="
+              selectedCategory = null;
+              searchName = '';
+              searchCity = null;
+              searchTrade = 'all';
+              applyFilter()
+            "
+          >
+            Cancella Filtri
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="col-md-9">
+      <div id="table">
+        <div class="results-header">
+          <h5>
+            @if (selectedCategory) {
+              Risultati per: <strong>{{ selectedCategory }}</strong>
+            } @else {
+              Tutti gli articoli
+            }
+          </h5>
+          <span class="badge bg-success"
+            >{{ filteredItems.length }} articoli</span
+          >
+        </div>
+        <table class="table table-striped m-4">
+          <thead>
+            <tr id="intestation">
+              <th>Copertina</th>
+              <th>Nome</th>
+              <th>Scambio</th>
+              <th>Condizione</th>
+              <th>Categoria</th>
+              <th>Città</th>
+              <th>Data</th>
+              <th>Proprietario</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tabody">
+            @for (i of filteredItems; track i.id) {
+              <tr>
+                <td>
+                  @if (i.cover) {
+                    <img
+                      [src]="i.cover"
+                      alt="Copertina: {{ i.name }}"
+                      style="
+                        max-width: 60px;
+                        max-height: 80px;
+                        object-fit: cover;
+                        border-radius: 4px;
+                      "
+                    />
+                  } @else {
+                    <span class="text-muted" style="font-size: 0.8rem"
+                      >Nessuna immagine</span
+                    >
+                  }
+                </td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.activetrade }}</td>
+                <td>{{ i.condition }}</td>
+                <td>{{ i.categoryName }}</td>
+                <td>{{ i.ownerCityName }}</td>
+                <td>{{ i.creationDate }}</td>
+                <td>{{ i.ownerName }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-outline-success"
+                    [routerLink]="['/item', i.id]"
+                  >
+                    mostra dettagli
+                  </button>
+                </td>
+              </tr>
+            }
+            @if (filteredItems.length === 0) {
+              <tr>
+                <td colspan="8" class="text-center text-muted">
+                  Nessun articolo trovato
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

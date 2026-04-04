@@ -1,0 +1,35 @@
+
+    <div class="intest"><p>Hai selezionato l'oggetto: {{item?.name}} di {{item?.ownerName}}</p>
+    <p>Ora seleziona uno dei tuoi oggetti per scambiarlo</p></div>
+<div style="display: flex;">
+    <div class="container">
+        <table class="table table-striped m-4">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Stato</th>
+                    <th>Condizione</th>
+                    <th>Categoria</th>
+                    <th>Data</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (i of items; track i.id){
+                    <tr>
+                        <td>{{i.name}}</td> 
+                        <td>{{i.activetrade}}</td> 
+                        <td>{{i.condition}}</td>
+                        <td>{{i.categoryName}}</td>  
+                        <td>{{i.creationDate}}</td>
+                        @if(i.activetrade){
+                        <td><button type="button" class="btn btn-outline-success" (click)="goToTradeAdd(i, item!)">seleziona</button></td>
+                        } @else {
+                            <td></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+.alert {
+    background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+    padding-top: 2em;
+  }
+
+  #btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+  }
+
+  button:hover {
+    background-color: #878787;
+    color: black;
+    transform: scale(1.10);
+  }
+
+  .btn {
+    margin: 1em;
+  }
+
+  #delete:hover {
+    background-color: #ed2a34;
+    color: black;
+    transform: scale(1.10);
+  }
+
+  h4 {
+    font-family: "Playwrite FR Moderne";
+    font-size: 2em;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4);
+    margin: 10px;
+  }
+

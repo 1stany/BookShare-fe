@@ -1,0 +1,23 @@
+<div id="newType"><h3>Aggiungi tipologia di prodotto!</h3></div>
+<div class="addTypeContainer">
+<form #addItemTypeForm="ngForm" (ngSubmit)="onSubmit(addItemTypeForm)">
+    <div class="form-group">
+        <label>*Nome: <input type="text" name="name" required ngModel></label>
+      </div>
+      <div class="form-group">
+        <label>*Descrizione: <input type="text" name="description" required ngModel id="large-input"></label>
+      </div>
+      <div class="form-group">
+          <label>*Categoria:</label>
+          <select name="categoryName" required ngModel>
+            <option value="" disabled>Seleziona una categoria</option>
+            @for (category of categories; track category) {
+              <option [value]="category">{{ category }}</option>
+            }
+          </select>
+        </div>
+      <div class="form-group">
+        <button type="submit">AGGIUNGI!</button>
+      </div>
+</form>
+</div>

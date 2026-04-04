@@ -1,0 +1,255 @@
+<div class="m-4">
+  <div id="dettagli">La mia pagina personale</div>
+</div>
+
+@if (!isAuthenticated) {
+  <div
+    id="alert"
+    class="alert alert"
+    role="alert"
+    style="
+      background-color: #f8d7da !important;
+      border-left: 4px solid #dc3545 !important;
+      border-radius: 4px !important;
+      margin: 0 !important;
+    "
+  >
+    <h4 class="alert-heading" style="color: #721c24 !important">
+      ⚠ Accesso negato
+    </h4>
+    <p style="color: #721c24 !important">
+      Devi effettuare il login per visualizzare il tuo profilo.
+    </p>
+    <hr style="border-color: #dc3545 !important" />
+    <div class="mb-0">
+      <div>
+        <button type="button" class="btn btn-secondary" routerLink="/login">
+          Vai al Login
+        </button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">person</mat-icon>
+        </ng-template>
+
+        <div class="intest"><p>Dettagli personali</p></div>
+
+        <mat-grid-list cols="2" rowHeight="2:1" class="profile-main-grid">
+          <mat-grid-tile class="profile-details-tile">
+            <div class="flip-arrow-container profile-details-card">
+              <div class="flip-container" [class.flip]="flipped">
+                <div class="flipper">
+                  <div class="front">
+                    <table
+                      class="table table-striped-columns profile-details-table"
+                    >
+                      <tbody>
+                        <tr>
+                          <td>NOME:</td>
+                          <td>{{ user?.firstname }} {{ user?.lastname }}</td>
+                        </tr>
+                        <tr>
+                          <td>EMAIL:</td>
+                          <td>{{ user?.email }}</td>
+                        </tr>
+                        <tr>
+                          <td>TELEFONO:</td>
+                          <td>{{ user?.phone }}</td>
+                        </tr>
+                        <tr>
+                          <td>GENERE:</td>
+                          <td>{{ user?.gender }}</td>
+                        </tr>
+                        <tr>
+                          <td>DATA DI NASCITA:</td>
+                          <td>{{ user?.birthdate }}</td>
+                        </tr>
+                        <tr>
+                          <td>CITTA':</td>
+                          <td>
+                            @if (!editingCity) {
+                              <span class="city-display">
+                                {{ user?.cityName }}
+                                <mat-icon
+                                  class="city-edit-icon"
+                                  (click)="startEditCity()"
+                                  >edit</mat-icon
+                                >
+                              </span>
+                            } @else {
+                              <div class="city-edit-container">
+                                <mat-form-field
+                                  appearance="outline"
+                                  class="city-select-field"
+                                >
+                                  <mat-select [(ngModel)]="selectedCityId">
+                                    @for (city of cities; track city.id) {
+                                      <mat-option [value]="city.id">{{
+                                        city.name
+                                      }}</mat-option>
+                                    }
+                                  </mat-select>
+                                </mat-form-field>
+                                <div class="city-edit-actions">
+                                  <mat-icon
+                                    class="city-action-icon save"
+                                    (click)="saveCity()"
+                                    >check</mat-icon
+                                  >
+                                  <mat-icon
+                                    class="city-action-icon cancel"
+                                    (click)="cancelEditCity()"
+                                    >close</mat-icon
+                                  >
+                                </div>
+                              </div>
+                            }
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="back">
+                    <table class="table table-striped-columns">
+                      <tbody>
+                        <tr>
+                          Ultima recensione
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="arrow" (click)="toggleFlip()">
+                <mat-icon>chevron_right</mat-icon>
+              </div>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile class="profile-card-tile">
+            <div class="profile-card">
+              <div class="profile-image-container">
+                <img
+                  src="imgs/profile1.jpg"
+                  alt="Foto Profilo"
+                  class="profile-image"
+                />
+              </div>
+              <div class="profile-description-container">
+                <h3>Bio</h3>
+                <p class="profile-description">{{ user?.description }}</p>
+              </div>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">all_inclusive</mat-icon>
+        </ng-template>
+
+        <div class="intest"><p>I miei oggetti</p></div>
+
+        <div class="container">
+          <table class="table table-striped m-4">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Stato</th>
+                <th>Condizione</th>
+                <th>Categoria</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (i of items; track i.id) {
+                <tr>
+                  <td>{{ i.name }}</td>
+                  <td>{{ i.activetrade }}</td>
+                  <td>{{ i.condition }}</td>
+                  <td>{{ i.categoryName }}</td>
+                  <td>{{ i.creationDate }}</td>
+                  <td></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">notifications</mat-icon>
+        </ng-template>
+
+        <div class="intest"><p>notifiche</p></div>
+
+        <div class="container">
+          <table class="table table-striped m-4">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Stato</th>
+                <th>Condizione</th>
+                <th>Categoria</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (i of items; track i.id) {
+                <tr>
+                  <td>{{ i.name }}</td>
+                  <td>{{ i.activetrade }}</td>
+                  <td>{{ i.condition }}</td>
+                  <td>{{ i.categoryName }}</td>
+                  <td>{{ i.creationDate }}</td>
+                  <td></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">favorite</mat-icon>
+        </ng-template>
+
+        <div style="display: flex">
+          <div class="container">
+            <table class="table table-striped m-4">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Categoria</th>
+                  <th>Descrizione</th>
+                  <th>Data</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (it of myWishlist; track it.id) {
+                  <tr>
+                    <td>{{ it.name }}</td>
+                    <td>{{ it.categoryName }}</td>
+                    <td>{{ it.description }}</td>
+                    <td>{{ it.dateAdded }}</td>
+                    <td></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-grid-list>
+}

@@ -1,0 +1,41 @@
+.intest{
+    text-align: center;
+    background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
+    color: #ffffff;
+    text-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    font-family: "Playwrite FR Moderne";
+    font-size: 1.5em;
+    color: #ffffff;
+    text-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4);
+    height: 100px;
+}
+
+p{
+    padding-top: 10px;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+}
+
+.btn{
+    font-family: "Playwrite FR Moderne", cursive;
+}
+
+.table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 10px; /* Bordi smussati per l'ultima riga, prima cella */
+}
+
+.table tbody tr:last-child td:last-child {
+    border-radius: 0 0 10px 0; /* Bordi smussati per l'ultima riga, ultima cella */
+}
+
+.table th:first-child {
+    border-radius: 10px 0 0 0; /* Bordi smussati per l'intestazione, prima cella */
+}
+
+.table th:last-child {
+    border-radius: 0 10px 0 0; /* Bordi smussati per l'intestazione, ultima cella */
+}
