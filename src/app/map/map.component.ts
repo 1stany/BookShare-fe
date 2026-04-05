@@ -35,7 +35,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
   private map!: L.Map;
   // MarkerClusterGroup per raggruppare i marker vicini
-  private markersLayer = L.markerClusterGroup();
+  private markersLayer!: L.MarkerClusterGroup;
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -63,6 +63,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
       },
     ).addTo(this.map);
 
+    // Inizializza il cluster *dopo* che il side-effect import ha esteso L
+    this.markersLayer = L.markerClusterGroup();
     // Aggiunge il layer dei marker alla mappa
     this.markersLayer.addTo(this.map);
   }
