@@ -120,6 +120,13 @@
         ></textarea>
       </mat-form-field>
     </div>
+    <div class="privacy-checkbox">
+      <mat-checkbox formControlName="privacyAccepted" color="primary">
+        Accetto che la mia città di residenza venga utilizzata per mostrare i
+        libri disponibili nei punti di scambio. I miei dati di posizione esatta
+        non verranno mai condivisi.
+      </mat-checkbox>
+    </div>
     <div>
       <button type="submit" [disabled]="!registerForm.valid">
         REGISTRATI!

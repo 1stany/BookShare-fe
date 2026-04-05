@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CityService } from '../services/city.service';
 
 @Component({
@@ -36,6 +37,7 @@ import { CityService } from '../services/city.service';
     MatSelectModule,
     MatDatepickerModule,
     MatIconModule,
+    MatCheckboxModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './register.component.html',
@@ -65,6 +67,7 @@ export class RegisterComponent {
       date: ['', Validators.required],
       password: ['', Validators.required],
       description: [''],
+      privacyAccepted: [false, Validators.requiredTrue],
     });
 
     const emailControl = this.registerForm.get('email')!;
