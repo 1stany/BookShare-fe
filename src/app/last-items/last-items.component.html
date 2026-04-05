@@ -65,8 +65,8 @@
           </select>
           @if (geolocated) {
             <small class="text-success">📍 Posizione rilevata</small>
-          } @else {
-            <small class="text-muted">📍 Centro predefinito: Roma</small>
+          } @else if (searchCity) {
+            <small class="text-muted">📍 Centro: {{ searchCity }}</small>
           }
         </div>
 
