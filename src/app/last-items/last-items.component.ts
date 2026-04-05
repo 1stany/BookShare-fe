@@ -33,7 +33,14 @@ export class LastItemsComponent implements OnInit {
   searchName = '';
   searchCity: string | null = null;
   searchTrade: string = 'all'; // 'all' | 'true' | 'false'
+  searchRadius: number = 0; // 0 = tutti, altrimenti km
   cities: City[] = [];
+
+  // Posizione dell'utente (centro per il filtro spaziale)
+  userLat = 41.9028; // default: Roma
+  userLng = 12.4964;
+  geolocated = false;
+  userCityName: string | null = null;
 
   // Items mappati per la mappa
   mapItems: ItemDto[] = [];
@@ -46,9 +53,92 @@ export class LastItemsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadUserCity();
+    this.detectUserPosition();
     this.loadItems();
-    this.cityService.getCities().subscribe((c) => (this.cities = c));
+    this.cityService.getCities().subscribe((c) => {
+      this.cities = c;
+      // Aggiorna il centro con la città del profilo se disponibile
+      this.applyUserCityCenter();
+      this.applyFilter();
+    });
     this.addItemService.getCategories().subscribe((c) => (this.categories = c));
+  }
+
+  /** Carica la città dal profilo utente loggato */
+  private loadUserCity(): void {
+    this.userService.getUserDetails().subscribe({
+      next: (user) => {
+        if (user?.cityName) {
+          this.userCityName = user.cityName;
+          this.applyUserCityCenter();
+        }
+      },
+      error: () => {
+        console.warn('[UserService] Profilo non disponibile, uso default.');
+      },
+    });
+  }
+
+  /** Imposta il centro raggio sulle coordinate della città del profilo utente */
+  private applyUserCityCenter(): void {
+    if (this.userCityName && this.cities.length > 0 && !this.geolocated) {
+      const city = this.cities.find((c) => c.name === this.userCityName);
+      if (city) {
+        this.userLat = city.latitude;
+        this.userLng = city.longitude;
+      }
+    }
+  }
+
+  /** Rileva la posizione dell'utente tramite Geolocation API */
+  private detectUserPosition(): void {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          this.userLat = pos.coords.latitude;
+          this.userLng = pos.coords.longitude;
+          this.geolocated = true;
+          console.log(
+            '[Geolocation] Posizione utente:',
+            this.userLat,
+            this.userLng,
+          );
+          this.applyFilter();
+        },
+        (err) => {
+          console.warn(
+            '[Geolocation] Non disponibile, uso default Roma:',
+            err.message,
+          );
+        },
+      );
+    }
+  }
+
+  /**
+   * Formula di Haversine: calcola la distanza in KM tra due coordinate.
+   */
+  private haversineKm(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): number {
+    const R = 6371; // raggio terrestre in km
+    const dLat = this.deg2rad(lat2 - lat1);
+    const dLon = this.deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.deg2rad(lat1)) *
+        Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  private deg2rad(deg: number): number {
+    return deg * (Math.PI / 180);
   }
 
   loadItems(): void {
@@ -144,10 +234,41 @@ export class LastItemsComponent implements OnInit {
       result = result.filter((item) => item.activetrade === false);
     }
 
+    // Filtro spaziale: nasconde dalla lista E dalla mappa i libri fuori dal raggio
+    // Centro: città selezionata nel filtro > città del profilo > geolocalizzazione > Roma
+    let centerLat = this.userLat;
+    let centerLng = this.userLng;
+
+    if (this.searchCity) {
+      const selectedCity = this.cities.find((c) => c.name === this.searchCity);
+      if (selectedCity) {
+        centerLat = selectedCity.latitude;
+        centerLng = selectedCity.longitude;
+      }
+    }
+
+    if (this.searchRadius > 0) {
+      result = result.filter((item) => {
+        const dto = this.toItemDto(item);
+        if (dto.latitude == null || dto.longitude == null) return false;
+        return (
+          this.haversineKm(centerLat, centerLng, dto.latitude, dto.longitude) <=
+          this.searchRadius
+        );
+      });
+    }
+
     this.filteredItems = result;
 
     // Aggiorna gli items per la mappa in base ai filtri attivi
     this.mapItems = this.filteredItems.map((item) => this.toItemDto(item));
+
+    // Aggiorna il cerchio del raggio sulla mappa
+    this.mapComponent?.setRadiusCircle(
+      this.searchRadius > 0 ? centerLat : null,
+      this.searchRadius > 0 ? centerLng : null,
+      this.searchRadius,
+    );
   }
 
   /** Converte un Item nel formato richiesto dal MapComponent */
@@ -155,6 +276,7 @@ export class LastItemsComponent implements OnInit {
     // Cerca le coordinate dalla lista delle città caricate
     const city = this.cities.find((c) => c.name === item.ownerCityName);
     return {
+      id: item.id,
       title: item.name,
       latitude: item.latitude ?? city?.latitude ?? null,
       longitude: item.longitude ?? city?.longitude ?? null,

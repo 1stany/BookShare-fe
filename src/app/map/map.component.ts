@@ -5,13 +5,15 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import * as L from 'leaflet';
+import * as Leaflet from 'leaflet';
 import 'leaflet.markercluster';
 import { ItemDto } from '../model/item-dto.model';
 
+// Forza TypeScript a trattare L come any, evitando errori su markerClusterGroup
+declare var L: any;
+
 // Fix per le icone di Leaflet che non vengono trovate in Angular
-// (Webpack riscrive i path delle immagini, questo li ripristina)
-const iconDefault = L.icon({
+const iconDefault = Leaflet.icon({
   iconRetinaUrl: 'assets/marker-icon-2x.png',
   iconUrl: 'assets/marker-icon.png',
   shadowUrl: 'assets/marker-shadow.png',
@@ -21,7 +23,7 @@ const iconDefault = L.icon({
   tooltipAnchor: [16, -28],
   shadowSize: [41, 41],
 });
-L.Marker.prototype.options.icon = iconDefault;
+Leaflet.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'app-map',
@@ -30,12 +32,11 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrl: './map.component.css',
 })
 export class MapComponent implements AfterViewInit, OnChanges {
-  // Array di libri da visualizzare sulla mappa
   @Input() items: ItemDto[] = [];
 
-  private map!: L.Map;
-  // MarkerClusterGroup per raggruppare i marker vicini
-  private markersLayer!: L.MarkerClusterGroup;
+  private map: any;
+  private markersLayer: any;
+  private radiusCircle: any = null;
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -43,7 +44,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Aggiorna i marker ogni volta che l'input items cambia (es. dopo un filtro)
     if (changes['items'] && this.map) {
       this.updateMarkers();
     }
@@ -63,34 +63,54 @@ export class MapComponent implements AfterViewInit, OnChanges {
       },
     ).addTo(this.map);
 
-    // Inizializza il cluster *dopo* che il side-effect import ha esteso L
-    this.markersLayer = L.markerClusterGroup();
-    // Aggiunge il layer dei marker alla mappa
+    // Piano A: MarkerClusterGroup — Piano B: LayerGroup semplice
+    if (typeof L.markerClusterGroup === 'function') {
+      this.markersLayer = L.markerClusterGroup();
+      console.log(
+        '[MapComponent] MarkerClusterGroup inizializzato correttamente.',
+      );
+    } else {
+      this.markersLayer = L.layerGroup();
+      console.warn(
+        '[MapComponent] markerClusterGroup non disponibile — fallback a LayerGroup.',
+      );
+    }
+
     this.markersLayer.addTo(this.map);
   }
 
-  /**
-   * Pulisce i marker esistenti e li ricrea in base agli items correnti.
-   * Raggruppa i libri con le stesse coordinate (stessa città)
-   * mostrando tutti i titoli nello stesso popup.
-   */
+  /** Pulisce e ricrea i marker in base agli items correnti */
   updateMarkers(): void {
-    // Pulisci tutti i marker precedenti
     this.markersLayer.clearLayers();
 
+    console.log('[MapComponent] Markers caricati:', this.items.length);
+
     if (!this.items || this.items.length === 0) {
+      console.warn(
+        '[MapComponent] Array items vuoto — nessun marker da aggiungere.',
+      );
+      return;
+    }
+
+    const withCoords = this.items.filter(
+      (i) => i.latitude != null && i.longitude != null,
+    );
+    console.log(
+      '[MapComponent] Items con coordinate valide:',
+      withCoords.length,
+      '/',
+      this.items.length,
+    );
+
+    if (withCoords.length === 0) {
+      console.warn('[MapComponent] Nessun item ha coordinate valide.');
       return;
     }
 
     // Raggruppa gli items per coordinate (stessa città = stesso marker)
     const grouped = new Map<string, ItemDto[]>();
 
-    for (const item of this.items) {
-      // Controllo: salta items con coordinate nulle per evitare errori
-      if (item.latitude == null || item.longitude == null) {
-        continue;
-      }
-
+    for (const item of withCoords) {
       const key = `${item.latitude},${item.longitude}`;
       if (!grouped.has(key)) {
         grouped.set(key, []);
@@ -102,17 +122,26 @@ export class MapComponent implements AfterViewInit, OnChanges {
     grouped.forEach((groupedItems, key) => {
       const [lat, lng] = key.split(',').map(Number);
 
-      // Popup: lockerpoint in grassetto + titolo del libro per ogni item
+      // Popup con lockerpoint, titolo e pulsante "Prenota"
       const popupContent = groupedItems
         .map(
           (item) =>
-            `<strong>${this.escapeHtml(item.lockerpoint)}</strong><br>${this.escapeHtml(item.title)}`,
+            `<div style="margin-bottom:6px;">` +
+            `<strong>${this.escapeHtml(item.lockerpoint)}</strong><br>` +
+            `${this.escapeHtml(item.title)}<br>` +
+            `<a href="/item/${item.id}" style="display:inline-block;margin-top:4px;padding:4px 12px;background:#43b600;color:#fff;border:none;border-radius:4px;cursor:pointer;text-decoration:none;font-size:14px;">Prenota</a>` +
+            `</div>`,
         )
         .join('<hr>');
 
       const marker = L.marker([lat, lng]).bindPopup(popupContent);
       this.markersLayer.addLayer(marker);
     });
+
+    // Fix visibilità: forza il ricalcolo delle dimensioni della mappa
+    setTimeout(() => {
+      this.map.invalidateSize();
+    }, 200);
   }
 
   /** Fa "volare" la mappa verso le coordinate indicate */
@@ -127,6 +156,35 @@ export class MapComponent implements AfterViewInit, OnChanges {
     if (this.map) {
       this.map.flyTo([41.9028, 12.4964], 6);
     }
+  }
+
+  /** Mostra/nasconde il cerchio del raggio di ricerca sulla mappa */
+  setRadiusCircle(
+    lat: number | null,
+    lng: number | null,
+    radiusKm: number,
+  ): void {
+    // Rimuove il cerchio precedente
+    if (this.radiusCircle) {
+      this.map.removeLayer(this.radiusCircle);
+      this.radiusCircle = null;
+    }
+
+    if (lat == null || lng == null || radiusKm <= 0) {
+      return;
+    }
+
+    this.radiusCircle = L.circle([lat, lng], {
+      radius: radiusKm * 1000, // Leaflet usa metri
+      color: '#2d8300',
+      fillColor: '#43b600',
+      fillOpacity: 0.1,
+      weight: 2,
+      dashArray: '6 4',
+    }).addTo(this.map);
+
+    // Adatta la vista al cerchio
+    this.map.fitBounds(this.radiusCircle.getBounds(), { padding: [20, 20] });
   }
 
   /** Sanitizza il testo per evitare XSS injection nel popup HTML */
