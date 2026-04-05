@@ -1,0 +1,8 @@
+/* Contenitore mappa */
+#map {
+  width: 100%;
+  height: 500px;
+  z-index: 0; /* Evita che la mappa si sovrapponga a navbar/modal */
+  border-radius: 8px;
+  margin-top: 1rem;
+}

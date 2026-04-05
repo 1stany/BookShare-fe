@@ -11,4 +11,8 @@ export interface Item {
   ownerName?: string;
   ownerEmail: string;
   cover?: string;
+  // Campi aggiunti dal DTO backend (dati della città)
+  latitude?: number | null;
+  longitude?: number | null;
+  lockerpoint?: string;
 }

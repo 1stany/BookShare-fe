@@ -11,21 +11,20 @@ import { DeleteItemtypeComponent } from './delete-itemtype/delete-itemtype.compo
 import { TradeAddComponent } from './trade-add/trade-add.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import { MapComponent } from './map/map.component';
 
 export const routes: Routes = [
-    {path: '', component: HomeComponent},
-    {path: 'last', component: LastItemsComponent},
-    {path: 'item/:id', component: ItemComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: 'trade-offer/:itemId', component: TradeOfferComponent},
-    {path: 'wishlist', component: WishlistComponent},
-    {path: 'add-itemtype', component: AddItemtypeComponent},
-    {path: 'delete-itemtype/:id', component: DeleteItemtypeComponent},
-    {path: 'trade-add', component: TradeAddComponent},
-    {path: 'add-item', component: AddItemComponent},
-    {path: 'profile', component: ProfileComponent},
-    
+  { path: '', component: HomeComponent },
+  { path: 'last', component: LastItemsComponent },
+  { path: 'item/:id', component: ItemComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'trade-offer/:itemId', component: TradeOfferComponent },
+  { path: 'wishlist', component: WishlistComponent },
+  { path: 'add-itemtype', component: AddItemtypeComponent },
+  { path: 'delete-itemtype/:id', component: DeleteItemtypeComponent },
+  { path: 'trade-add', component: TradeAddComponent },
+  { path: 'add-item', component: AddItemComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'map', component: MapComponent },
 ];
-

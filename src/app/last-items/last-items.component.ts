@@ -2,17 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { LastItemsService } from '../services/last-items.service';
 import { RouterModule } from '@angular/router';
 import { Item } from '../model/item.model';
+import { ItemDto } from '../model/item-dto.model';
 import { City } from '../model/city.model';
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { AddItemService } from '../services/add-item.service';
 import { FormsModule } from '@angular/forms';
 import { CityService } from '../services/city.service';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-last-items',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule, MapComponent],
   templateUrl: './last-items.component.html',
   styleUrl: './last-items.component.css',
 })
@@ -30,6 +32,9 @@ export class LastItemsComponent implements OnInit {
   searchCity: string | null = null;
   searchTrade: string = 'all'; // 'all' | 'true' | 'false'
   cities: City[] = [];
+
+  // Items mappati per la mappa
+  mapItems: ItemDto[] = [];
 
   constructor(
     private lastItemsService: LastItemsService,
@@ -132,6 +137,21 @@ export class LastItemsComponent implements OnInit {
     }
 
     this.filteredItems = result;
+
+    // Aggiorna gli items per la mappa in base ai filtri attivi
+    this.mapItems = this.filteredItems.map((item) => this.toItemDto(item));
+  }
+
+  /** Converte un Item nel formato richiesto dal MapComponent */
+  private toItemDto(item: Item): ItemDto {
+    // Cerca le coordinate dalla lista delle città caricate
+    const city = this.cities.find((c) => c.name === item.ownerCityName);
+    return {
+      title: item.name,
+      latitude: item.latitude ?? city?.latitude ?? null,
+      longitude: item.longitude ?? city?.longitude ?? null,
+      lockerpoint: item.lockerpoint ?? city?.lockerpoint ?? '',
+    };
   }
 
   isSelected(category: string): boolean {
