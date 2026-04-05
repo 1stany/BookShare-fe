@@ -234,26 +234,23 @@ export class LastItemsComponent implements OnInit {
       result = result.filter((item) => item.activetrade === false);
     }
 
-    // Filtro spaziale: nasconde dalla lista E dalla mappa i libri fuori dal raggio
-    // Centro: città selezionata nel filtro > città del profilo > geolocalizzazione > Roma
-    let centerLat = this.userLat;
-    let centerLng = this.userLng;
+    // Filtro spaziale: attivo SOLO se è selezionata una città nel filtro.
+    // Il centro è sempre la città filtrata; senza città il raggio non si applica.
+    const selectedCity = this.searchCity
+      ? this.cities.find((c) => c.name === this.searchCity)
+      : null;
 
-    if (this.searchCity) {
-      const selectedCity = this.cities.find((c) => c.name === this.searchCity);
-      if (selectedCity) {
-        centerLat = selectedCity.latitude;
-        centerLng = selectedCity.longitude;
-      }
-    }
-
-    if (this.searchRadius > 0) {
+    if (this.searchRadius > 0 && selectedCity) {
       result = result.filter((item) => {
         const dto = this.toItemDto(item);
         if (dto.latitude == null || dto.longitude == null) return false;
         return (
-          this.haversineKm(centerLat, centerLng, dto.latitude, dto.longitude) <=
-          this.searchRadius
+          this.haversineKm(
+            selectedCity.latitude,
+            selectedCity.longitude,
+            dto.latitude,
+            dto.longitude,
+          ) <= this.searchRadius
         );
       });
     }
@@ -263,10 +260,10 @@ export class LastItemsComponent implements OnInit {
     // Aggiorna gli items per la mappa in base ai filtri attivi
     this.mapItems = this.filteredItems.map((item) => this.toItemDto(item));
 
-    // Aggiorna il cerchio del raggio sulla mappa
+    // Cerchio sulla mappa: visibile solo se c'è sia una città che un raggio
     this.mapComponent?.setRadiusCircle(
-      this.searchRadius > 0 ? centerLat : null,
-      this.searchRadius > 0 ? centerLng : null,
+      this.searchRadius > 0 && selectedCity ? selectedCity.latitude : null,
+      this.searchRadius > 0 && selectedCity ? selectedCity.longitude : null,
       this.searchRadius,
     );
   }
