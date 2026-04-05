@@ -6,3 +6,9 @@
   border-radius: 8px;
   margin-top: 1rem;
 }
+
+.leaflet-popup-content {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 250px;
+}

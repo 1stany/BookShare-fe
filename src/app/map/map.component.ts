@@ -6,6 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet.markercluster';
 import { ItemDto } from '../model/item-dto.model';
 
 // Fix per le icone di Leaflet che non vengono trovate in Angular
@@ -33,8 +34,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
   @Input() items: ItemDto[] = [];
 
   private map!: L.Map;
-  // LayerGroup per gestire i marker (pulizia e aggiornamento)
-  private markersLayer = L.layerGroup();
+  // MarkerClusterGroup per raggruppare i marker vicini
+  private markersLayer = L.markerClusterGroup();
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -52,10 +53,15 @@ export class MapComponent implements AfterViewInit, OnChanges {
   private initMap(): void {
     this.map = L.map('map').setView([41.9028, 12.4964], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(this.map);
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20,
+      },
+    ).addTo(this.map);
 
     // Aggiunge il layer dei marker alla mappa
     this.markersLayer.addTo(this.map);
@@ -105,6 +111,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
       const marker = L.marker([lat, lng]).bindPopup(popupContent);
       this.markersLayer.addLayer(marker);
     });
+  }
+
+  /** Fa "volare" la mappa verso le coordinate indicate */
+  flyTo(lat: number, lng: number, zoom = 13): void {
+    if (this.map) {
+      this.map.flyTo([lat, lng], zoom);
+    }
+  }
+
+  /** Resetta la vista iniziale centrata sull'Italia */
+  resetView(): void {
+    if (this.map) {
+      this.map.flyTo([41.9028, 12.4964], 6);
+    }
   }
 
   /** Sanitizza il testo per evitare XSS injection nel popup HTML */

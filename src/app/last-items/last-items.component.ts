@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LastItemsService } from '../services/last-items.service';
 import { RouterModule } from '@angular/router';
 import { Item } from '../model/item.model';
@@ -19,6 +19,8 @@ import { MapComponent } from '../map/map.component';
   styleUrl: './last-items.component.css',
 })
 export class LastItemsComponent implements OnInit {
+  @ViewChild(MapComponent) mapComponent!: MapComponent;
+
   items: Item[] = [];
   filteredItems: Item[] = [];
   pars: [boolean, number] = [true, 10];
@@ -128,6 +130,12 @@ export class LastItemsComponent implements OnInit {
 
     if (this.searchCity) {
       result = result.filter((item) => item.ownerCityName === this.searchCity);
+      const city = this.cities.find((c) => c.name === this.searchCity);
+      if (city) {
+        this.mapComponent?.flyTo(city.latitude, city.longitude);
+      }
+    } else {
+      this.mapComponent?.resetView();
     }
 
     if (this.searchTrade === 'true') {
