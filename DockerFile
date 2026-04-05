@@ -1,0 +1,14 @@
+# Fase 1: Build dell'app Angular
+FROM node:18 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build --configuration=production
+
+# Fase 2: Usa Nginx per servire l'app (molto più leggero e veloce)
+FROM nginx:alpine
+
+COPY --from=build /app/dist/reshare/browser /usr/share/nginx/html
+
+EXPOSE 80
