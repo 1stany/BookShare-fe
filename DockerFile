@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build --configuration=production
+RUN npm run build
 
 # Fase 2: Usa Nginx per servire l'app (molto più leggero e veloce)
 FROM nginx:alpine
