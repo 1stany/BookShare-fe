@@ -67,6 +67,9 @@ export class LastItemsComponent implements OnInit {
 
   /** Carica la città dal profilo utente loggato */
   private loadUserCity(): void {
+    if (!localStorage.getItem('token')) {
+      return;
+    }
     this.userService.getUserDetails().subscribe({
       next: (user) => {
         if (user?.cityName) {
@@ -107,10 +110,7 @@ export class LastItemsComponent implements OnInit {
           this.applyFilter();
         },
         (err) => {
-          console.warn(
-            '[Geolocation] Non disponibile, uso default Roma:',
-            err.message,
-          );
+          this.applyFilter();
         },
       );
     }
@@ -219,8 +219,13 @@ export class LastItemsComponent implements OnInit {
     }
 
     if (this.searchCity) {
-      result = result.filter((item) => item.ownerCityName === this.searchCity);
       const city = this.cities.find((c) => c.name === this.searchCity);
+      // Se c'è un raggio, non filtrare per nome città: il filtro spaziale farà il lavoro
+      if (!(this.searchRadius > 0)) {
+        result = result.filter(
+          (item) => item.ownerCityName === this.searchCity,
+        );
+      }
       if (city) {
         this.mapComponent?.flyTo(city.latitude, city.longitude);
       }
@@ -244,15 +249,20 @@ export class LastItemsComponent implements OnInit {
       result = result.filter((item) => {
         const dto = this.toItemDto(item);
         if (dto.latitude == null || dto.longitude == null) return false;
-        return (
-          this.haversineKm(
-            selectedCity.latitude,
-            selectedCity.longitude,
-            dto.latitude,
-            dto.longitude,
-          ) <= this.searchRadius
+        const dist = this.haversineKm(
+          selectedCity.latitude,
+          selectedCity.longitude,
+          dto.latitude,
+          dto.longitude,
         );
+        console.log(
+          `[Filter] ${item.name} (${item.ownerCityName}) → lat=${dto.latitude}, lng=${dto.longitude}, dist=${dist.toFixed(1)}km, include=${dist <= this.searchRadius}`,
+        );
+        return dist <= this.searchRadius;
       });
+      console.log(
+        `[Filter] Dopo filtro raggio (${this.searchRadius}km da ${this.searchCity}): ${result.length} items`,
+      );
     }
 
     this.filteredItems = result;

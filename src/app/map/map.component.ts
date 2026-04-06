@@ -40,7 +40,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.updateMarkers();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -83,12 +82,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
   updateMarkers(): void {
     this.markersLayer.clearLayers();
 
-    console.log('[MapComponent] Markers caricati:', this.items.length);
-
     if (!this.items || this.items.length === 0) {
-      console.warn(
-        '[MapComponent] Array items vuoto — nessun marker da aggiungere.',
-      );
       return;
     }
 
