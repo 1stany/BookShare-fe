@@ -1,3 +1,6 @@
+/* Stili del componente Offerta Scambio */
+
+/* Intestazione: sfondo verde con gradiente, testo bianco centrato */
 .intest{
     text-align: center;
     background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));

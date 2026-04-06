@@ -1,3 +1,6 @@
+/* Stili del componente Bacheca (Ultimi Articoli) */
+
+/* Intestazione tabella: font decorativo corsivo */
 #intestation {
     font-family: "Playwrite FR Moderne", cursive;
     background-color: transparent;
@@ -33,7 +36,7 @@ justify-content: center;
     border-radius: 0 10px 0 0;
 }
 
-/* Filters Styling */
+/* Pannello filtri laterale: sfondo chiaro, bordo verde, sticky per restare visibile durante lo scroll */
 .filters-container {
     background: linear-gradient(135deg, #f0f8ec, #ffffff);
     padding: 18px;
@@ -90,6 +93,7 @@ justify-content: center;
     margin: 16px 0;
 }
 
+/* Pulsanti categoria: layout verticale con evidenziazione della categoria selezionata (classe .active) */
 .category-list {
     display: flex;
     flex-direction: column;
@@ -140,6 +144,7 @@ justify-content: center;
     margin: 0;
 }
 
+/* Media query: su schermi piccoli (< 768px) il pannello filtri diventa non-sticky */
 @media (max-width: 768px) {
     .filters-container {
         position: static;

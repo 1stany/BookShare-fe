@@ -1,3 +1,6 @@
+/* Stili del componente Header */
+
+/* Contenitore principale dell'header: layout flessibile verticale con altezza fissa e font decorativo */
 header {
     height: 360px;
     display: flex;
@@ -14,11 +17,13 @@ h1 {
     margin-bottom: 6em;
 }
 
+/* Logo del sito: dimensione e bordi arrotondati */
 #logo{
     width: 20em;
     border-radius: 30%;
 }
 
+/* Barra di navigazione: sfondo verde scuro semitrasparente con font Roboto */
 nav{
     background:  rgba(7, 87, 0, 0.893);
     padding: 1rem 0;
@@ -52,6 +57,7 @@ nav{
 }
 
 
+/* Effetto hover sui link della navbar: cambio colore, sfondo e scala */
 .navbar-nav .nav-link:hover {
     color: #080075; 
     background-color: #00e727; 
@@ -62,6 +68,7 @@ nav{
     font-weight: 2px;
 }
 
+/* Area hero: sfondo con gradiente verde, testo scuro e font decorativo */
 .hero-content {
     color: #033e08;
     border: 1px solid black;
@@ -87,6 +94,7 @@ nav{
     transform: scale(1.05);
   }
 
+  /* Pulsante Registrati/Login: stile blu con bordi arrotondati e transizione hover */
   .register {
     font-size: 16px;
     font-weight: bold;

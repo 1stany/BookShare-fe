@@ -1,3 +1,6 @@
+/* Stili del componente Conferma Eliminazione */
+
+/* Alert di conferma: sfondo verde con gradiente */
 .alert {
     background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
     padding-top: 2em;
@@ -20,6 +23,7 @@
     margin: 1em;
   }
 
+  /* Pulsante elimina: hover rosso per indicare azione distruttiva */
   #delete:hover {
     background-color: #ed2a34;
     color: black;

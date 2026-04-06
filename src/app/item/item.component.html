@@ -1,78 +1,80 @@
+<!-- Componente Item: mostra i dettagli di un singolo libro (nome, descrizione, stato, condizione, categoria, città, data) -->
+<!-- Include la copertina se disponibile e i pulsanti per tornare indietro o avviare uno scambio -->
 <div class="m-4">
   <div id="dettagli">Dettagli oggetto</div>
-@if (item) {
-  <div class="d-flex gap-4 align-items-start mb-4">
-    @if (item.cover) {
-      <div class="flex-shrink-0">
-        <img
-          [src]="item.cover"
-          [alt]="'Copertina: ' + item.name"
-          class="img-fluid"
-          style="max-width: 300px; border-radius: 8px"
-        />
-      </div>
-    }
-    </div>
-}
-    <div id="table" class="flex-grow-1">
-      <table class="table table-striped-columns">
-        <tbody>
-          <tr>
-            <td>NOME:</td>
-            <td>{{ item?.name }}</td>
-          </tr>
-          <tr>
-            <td>DESCRIZIONE:</td>
-            <td>{{ item?.description }}</td>
-          </tr>
-          <tr>
-            <td>STATO:</td>
-            <td>{{ item?.activetrade }}</td>
-          </tr>
-          <tr>
-            <td>CONDIZIONE:</td>
-            <td>{{ item?.condition }}</td>
-          </tr>
-          <tr>
-            <td>COMMENTO:</td>
-            <td>{{ item?.conditionComment }}</td>
-          </tr>
-          <tr>
-            <td>CATEGORIA:</td>
-            <td>{{ item?.categoryName }}</td>
-          </tr>
-          <tr>
-            <td>CITTA':</td>
-            <td>{{ item?.ownerCityName }}</td>
-          </tr>
-          <tr>
-            <td>DATA:</td>
-            <td>{{ item?.creationDate }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div>
-    <span class="change">
-      <span
-        ><button
-          id="trade"
-          class="btn btn-secondary btn-hover2"
-          routerLink="/last"
-        >
-          Indietro
-        </button></span
-      >
-
-      @if (item?.activetrade) {
-        <button
-          id="trade"
-          class="btn btn-success btn-hover"
-          [routerLink]="['/trade-offer', item?.id]"
-        >
-          Scambia
-        </button>
+  @if (item) {
+    <div class="d-flex gap-4 align-items-start mb-4">
+      @if (item.cover) {
+        <div class="flex-shrink-0">
+          <img
+            [src]="item.cover"
+            [alt]="'Copertina: ' + item.name"
+            class="img-fluid"
+            style="max-width: 300px; border-radius: 8px"
+          />
+        </div>
       }
-    </span>
+    </div>
+  }
+  <div id="table" class="flex-grow-1">
+    <table class="table table-striped-columns">
+      <tbody>
+        <tr>
+          <td>NOME:</td>
+          <td>{{ item?.name }}</td>
+        </tr>
+        <tr>
+          <td>DESCRIZIONE:</td>
+          <td>{{ item?.description }}</td>
+        </tr>
+        <tr>
+          <td>STATO:</td>
+          <td>{{ item?.activetrade }}</td>
+        </tr>
+        <tr>
+          <td>CONDIZIONE:</td>
+          <td>{{ item?.condition }}</td>
+        </tr>
+        <tr>
+          <td>COMMENTO:</td>
+          <td>{{ item?.conditionComment }}</td>
+        </tr>
+        <tr>
+          <td>CATEGORIA:</td>
+          <td>{{ item?.categoryName }}</td>
+        </tr>
+        <tr>
+          <td>CITTA':</td>
+          <td>{{ item?.ownerCityName }}</td>
+        </tr>
+        <tr>
+          <td>DATA:</td>
+          <td>{{ item?.creationDate }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
+<div>
+  <span class="change">
+    <span
+      ><button
+        id="trade"
+        class="btn btn-secondary btn-hover2"
+        routerLink="/last"
+      >
+        Indietro
+      </button></span
+    >
+
+    @if (item?.activetrade) {
+      <button
+        id="trade"
+        class="btn btn-success btn-hover"
+        [routerLink]="['/trade-offer', item?.id]"
+      >
+        Scambia
+      </button>
+    }
+  </span>
+</div>

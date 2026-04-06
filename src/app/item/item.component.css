@@ -1,3 +1,6 @@
+/* Stili del componente Dettaglio Libro */
+
+/* Corpo della tabella: font decorativo corsivo */
 tbody {
     font-family: "Playwrite FR Moderne", cursive;
 }
@@ -7,6 +10,7 @@ tbody {
     justify-content: center;
 }
 
+/* Pulsanti azione (Indietro, Scambia): grandi con bordi arrotondati */
 #trade {
     font-size: 1.60rem; 
     padding: 15px 25px;
@@ -14,6 +18,7 @@ tbody {
     margin: 10px;
 }
 
+/* Titolo "Dettagli oggetto": banner verde con testo bianco e ombra */
 #dettagli{
         background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
         height: 40px;
@@ -42,6 +47,7 @@ tbody {
     transition: background-color 0.3s, transform 0.3s; 
 }
 
+/* Bordi arrotondati sulla tabella: angoli smussati per prima e ultima riga */
 .table tbody tr:last-child td:first-child {
     border-radius: 0 0 0 10px; 
 }

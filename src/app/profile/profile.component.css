@@ -1,5 +1,7 @@
 
+/* Stili del componente Profilo Utente */
 
+  /* Griglia principale del profilo: layout flessibile a righe con padding laterale */
   .profile-main-grid {
     width: 100%;
     margin: 3.5rem auto 0 auto;
@@ -26,6 +28,7 @@
     overflow: visible !important;
   }
 
+  /* Card dettagli profilo: sfondo verde chiaro con gradiente e bordi arrotondati */
   .profile-details-card {
     background: linear-gradient(135deg, #c8e6c9 60%, #a5d6a7 100%);
     border-radius: 18px;
@@ -112,6 +115,7 @@
     min-height: 220px;
   }
 
+  /* Immagine profilo: contenitore circolare con ombra e bordo verde */
   .profile-image-container {
     display: flex;
     align-items: center;
@@ -233,6 +237,7 @@ tbody, #dettagli, .intest {
     
   }
   
+  /* Animazione flip card: effetto rotazione 3D per mostrare fronte/retro dei dettagli */
   .flip-container {
     perspective: 1000px;
     display: inline-block;

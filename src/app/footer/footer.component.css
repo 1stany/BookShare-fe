@@ -1,3 +1,6 @@
+/* Stili del componente Footer */
+
+/* Contenitore footer: sfondo verde scuro, testo bianco, font piccolo */
 .footer {
     background-color:  rgba(8, 65, 2, 0.784);
     color: #fff;
@@ -7,6 +10,7 @@
     margin-top: 80px;
 }
 
+/* Layout flessibile del footer: distribuisce le sezioni orizzontalmente con wrapping */
 .footer-container {
     display: flex;
     justify-content: space-between;
@@ -38,10 +42,12 @@
     transition: color 0.3s;
 }
 
+/* Effetto hover sui link del footer: colore arancione per evidenziare */
 .footer a:hover {
     color: #ff6600;
 }
 
+/* Sezioni del footer: larghezza minima per garantire il layout responsive */
 .footer-about,
 .footer-links,
 .footer-contact {

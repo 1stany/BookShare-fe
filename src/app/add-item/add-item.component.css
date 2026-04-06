@@ -1,3 +1,6 @@
+/* Stili del componente Aggiungi Libro */
+
+/* Container del form: sfondo verde con gradiente, centratura e altezza automatica */
 .registerContainer {
   background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
   padding: 20px;
@@ -71,11 +74,13 @@ label {
 
   }
 
+  /* Alert di successo/errore: sfondo verde con gradiente */
   .alert {
     background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
     padding-top: 2em;
   }
 
+  /* Stile speciale per alert di errore (accesso negato) */
   .alert-error {
     background-color: #f8d7da !important;
     padding-top: 0 !important;
@@ -99,6 +104,7 @@ label {
     margin: 7px;
   }
   
+  /* Banner titolo "Aggiungi nuovo libro": sfondo verde con gradiente */
   #newObj {
     background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
     height: 50px;

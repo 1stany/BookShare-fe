@@ -1,3 +1,6 @@
+/* Stili del componente Home */
+
+/* Logo nella card di benvenuto */
 #logo {
     height: 150px;
 
@@ -7,6 +10,7 @@
     margin: 60px;
 }
 
+/* Card principale: sfondo con gradiente verde chiaro */
 .card-body {
     background: linear-gradient(40deg,rgba(58, 164, 50, 0.638), rgba(225, 235, 152, 0.803));
 }
@@ -23,6 +27,7 @@ h3 {
     font-size: 3.5em;
 }
 
+/* Header e footer della card: barra verde scura decorativa */
 .card-header, .card-footer {
     justify-content: center;
     align-items: center;
@@ -66,7 +71,7 @@ h6 {
     text-align: center;
 }
 
-/* Pie Chart Section */
+/* Sezione grafico a torta e widget statistico: layout flessibile centrato */
 .chart-section {
     display: flex;
     justify-content: center;
@@ -83,6 +88,7 @@ h6 {
     height: 380px;
 }
 
+/* Widget contatore libri: card bianca con ombra e testo verde */
 .info-widget {
     display: flex;
     flex-direction: column;

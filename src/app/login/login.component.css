@@ -1,3 +1,6 @@
+/* Stili del componente Login */
+
+/* Container del form login: sfondo con gradiente verde, ombra e bordi arrotondati */
 .loginContainer {
     font-family: "Playwrite FR Moderne";
     font-size: 0.8em;
@@ -11,6 +14,7 @@
     background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
   }
   
+  /* Pulsante generico: stile blu con transizione hover */
   button {
     font-family: 'Arial', sans-serif;
     font-size: 16px;
@@ -27,6 +31,7 @@
     transition: background-color 0.3s ease;
   }
 
+  /* Titolo della pagina login: grande, centrato, con sfondo verde e ombra del testo */
   h2 {
     text-align: center;
     font-family: "Playwrite FR Moderne", cursive;

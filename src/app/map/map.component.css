@@ -1,12 +1,15 @@
-/* Contenitore mappa */
+/* Stili del componente Mappa */
+
+/* Contenitore mappa Leaflet: larghezza piena, altezza 500px, z-index basso per non sovrapporsi alla navbar */
 #map {
   width: 100%;
   height: 500px;
-  z-index: 0; /* Evita che la mappa si sovrapponga a navbar/modal */
+  z-index: 0;
   border-radius: 8px;
   margin-top: 1rem;
 }
 
+/* Popup sulla mappa: altezza massima con scroll e larghezza fissa */
 .leaflet-popup-content {
     max-height: 300px;
     overflow-y: auto;

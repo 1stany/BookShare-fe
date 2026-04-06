@@ -1,4 +1,5 @@
 
+/* Stili del componente Wishlist */
 
   label {
     font-family: "Playwrite FR Moderne";
@@ -19,6 +20,7 @@
     margin: 0;
   }
 
+  /* Banner titolo Wishlist: sfondo verde con gradiente */
   #wishlist {
     background: linear-gradient(135deg,  #43b600a3, rgba(7, 84, 0, 0.893));
     height: 50px;
@@ -64,6 +66,7 @@
     margin-bottom: 5px;
   }
 
+  /* Pulsante "Aggiungi": grande, blu, centrato, con hover */
   #aggiungi {
     display: block;
     margin: 20px auto;

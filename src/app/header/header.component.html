@@ -1,4 +1,6 @@
+<!-- Componente Header: contiene il logo, il titolo del sito e la barra di navigazione -->
 <header>
+  <!-- Sezione hero: area superiore con logo e titolo -->
   <div class="hero">
     <div class="hero-content">
       <div class="row">
@@ -23,6 +25,7 @@
       </div>
     </div>
 
+    <!-- Navbar Bootstrap responsive: contiene i link di navigazione e i pulsanti login/logout -->
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <button
@@ -57,6 +60,7 @@
               <a class="nav-link active" routerLink="wishlist">Wishlist</a>
             </li>
           </ul>
+          <!-- Controllo condizionale: mostra logout se autenticato, altrimenti registrazione e login -->
           @if (isLogged) {
             <button class="register" (click)="onLogout()">Log-out</button>
           } @else {
