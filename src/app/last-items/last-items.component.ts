@@ -241,28 +241,20 @@ export class LastItemsComponent implements OnInit {
 
     // Filtro spaziale: attivo SOLO se è selezionata una città nel filtro.
     // Il centro è sempre la città filtrata; senza città il raggio non si applica.
-    const selectedCity = this.searchCity
-      ? this.cities.find((c) => c.name === this.searchCity)
-      : null;
-
-    if (this.searchRadius > 0 && selectedCity) {
+    if (this.searchRadius > 0) {
       result = result.filter((item) => {
         const dto = this.toItemDto(item);
         if (dto.latitude == null || dto.longitude == null) return false;
+
         const dist = this.haversineKm(
-          selectedCity.latitude,
-          selectedCity.longitude,
+          this.userLat,
+          this.userLng,
           dto.latitude,
           dto.longitude,
         );
-        console.log(
-          `[Filter] ${item.name} (${item.ownerCityName}) → lat=${dto.latitude}, lng=${dto.longitude}, dist=${dist.toFixed(1)}km, include=${dist <= this.searchRadius}`,
-        );
+
         return dist <= this.searchRadius;
       });
-      console.log(
-        `[Filter] Dopo filtro raggio (${this.searchRadius}km da ${this.searchCity}): ${result.length} items`,
-      );
     }
 
     this.filteredItems = result;
@@ -272,8 +264,8 @@ export class LastItemsComponent implements OnInit {
 
     // Cerchio sulla mappa: visibile solo se c'è sia una città che un raggio
     this.mapComponent?.setRadiusCircle(
-      this.searchRadius > 0 && selectedCity ? selectedCity.latitude : null,
-      this.searchRadius > 0 && selectedCity ? selectedCity.longitude : null,
+      this.searchRadius > 0 ? this.userLat : null,
+      this.searchRadius > 0 ? this.userLng : null,
       this.searchRadius,
     );
   }
