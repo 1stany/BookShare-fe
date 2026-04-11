@@ -1,43 +1,58 @@
-<!-- Componente Home: pagina di benvenuto con descrizione del progetto, grafico e widget statistico -->
 <div class="card text-center">
   <div class="card-header"></div>
+
   <div class="card-body">
+
+    <!-- TITOLO CENTRATO -->
     <h3 class="card-title">Benvenuto su BookShare</h3>
+
     <div>
       <img
         src="favicon.ico"
-        alt="simbolo dell'infinito verede che indica il riuso"
+        alt="simbolo dell'infinito verde che indica il riuso"
         id="logo"
       />
     </div>
-    <p class="card-text">
-      la piattaforma dedicata allo scambio di libri usati. La nostra missione è
-      promuovere la sostenibilità e ridurre gli sprechi, offrendo a tutti la
-      possibilità di dare nuova vita agli oggetti che non utilizzano più. Su
-      BookShare, crediamo che ogni oggetto meriti una seconda possibilità e che,
-      insieme, possiamo contribuire a un futuro più verde e responsabile.
-      Unisciti a noi nella nostra missione per un mondo migliore, dove il riuso
-      e la condivisione diventano la norma.
-    </p>
-    <h6>BookShare: condividi, scambia, rispetta il pianeta.</h6>
 
-    <!-- Sezione Grafico + Widget: mostra un grafico a torta (canvas) e un contatore dei libri totali nel sistema -->
-    <div class="chart-section">
-      <div class="chart-container">
-        <canvas #pieCanvas></canvas>
-      </div>
-      <div class="info-widget">
-        <div class="widget-icon">📚</div>
-        <div class="widget-number">{{ totalItems }}</div>
-        <div class="widget-label">Libri totali nel sistema</div>
-      </div>
-    </div>
+    <!-- CONTENITORE AFFIANCATO -->
+    <div class="home-flex">
 
-    <div class="button-container">
-      <button class="btn btn-success" routerLink="/last">
-        Vai agli ultimi aggiunti
-      </button>
+      <!-- TESTO A SINISTRA -->
+      <div class="home-left">
+        <p class="card-text">
+          la piattaforma dedicata allo scambio di libri usati. La nostra missione è
+          promuovere la sostenibilità e ridurre gli sprechi, offrendo a tutti la
+          possibilità di dare nuova vita agli oggetti che non utilizzano più. Su
+          BookShare, crediamo che ogni oggetto meriti una seconda possibilità e che,
+          insieme, possiamo contribuire a un futuro più verde e responsabile.
+          Unisciti a noi nella nostra missione per un mondo migliore, dove il riuso
+          e la condivisione diventano la norma.
+        </p>
+
+        <h6>BookShare: condividi, scambia, rispetta il pianeta.</h6>
+
+        <div class="button-container">
+          <button class="btn btn-success" routerLink="/last">
+            Vai agli ultimi aggiunti
+          </button>
+        </div>
+      </div>
+
+      <!-- GRAFICO + WIDGET A DESTRA -->
+      <div class="home-right">
+        <div class="chart-container">
+          <canvas #pieCanvas></canvas>
+        </div>
+
+        <div class="info-widget">
+          <div class="widget-icon">📚</div>
+          <div class="widget-number">{{ totalItems }}</div>
+          <div class="widget-label">Libri totali nel sistema</div>
+        </div>
+      </div>
+
     </div>
   </div>
+
   <div class="card-footer"></div>
 </div>

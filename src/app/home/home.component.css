@@ -117,3 +117,40 @@ h6 {
     color: #555;
     margin-top: 4px;
 }
+
+/* Layout affiancato Home */
+.home-flex {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+/* Colonna sinistra (testo) */
+.home-left {
+    max-width: 480px;
+    text-align: left;
+}
+
+/* Testo più piccolo e più leggibile */
+.card-text {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    padding: 0;
+}
+
+/* Colonna destra (grafico + widget) */
+.home-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Migliora la leggibilità del titolo */
+.card-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
