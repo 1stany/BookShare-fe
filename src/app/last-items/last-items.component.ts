@@ -204,44 +204,56 @@ export class LastItemsComponent implements OnInit {
     this.applyFilter();
   }
 
+  /*Applica tutti i filtri (categoria, nome, città, trade e raggio).
+  Se è selezionata una città, imposta il centro del raggio sulle sue coordinate e aggiorna la mappa di conseguenza. 
+  Il raggio viene applicato solo quando esiste una città selezionata.*/
   applyFilter(): void {
     let result = this.items;
 
+    // --- Categoria ---
     if (this.selectedCategory) {
       result = result.filter(
         (item) => item.categoryName === this.selectedCategory,
       );
     }
 
+    // --- Nome ---
     if (this.searchName.trim()) {
       const term = this.searchName.trim().toLowerCase();
       result = result.filter((item) => item.name.toLowerCase().includes(term));
     }
 
+    // --- Città ---
     if (this.searchCity) {
       const city = this.cities.find((c) => c.name === this.searchCity);
-      // Se c'è un raggio, non filtrare per nome città: il filtro spaziale farà il lavoro
+
+      // Se NON c'è raggio → filtro per città
       if (!(this.searchRadius > 0)) {
         result = result.filter(
           (item) => item.ownerCityName === this.searchCity,
         );
       }
+
       if (city) {
+        // ⭐ IMPOSTA IL CENTRO DEL RAGGIO SULLA CITTÀ FILTRATA
+        this.userLat = city.latitude;
+        this.userLng = city.longitude;
+
         this.mapComponent?.flyTo(city.latitude, city.longitude);
       }
     } else {
       this.mapComponent?.resetView();
     }
 
+    // --- Trade ---
     if (this.searchTrade === 'true') {
       result = result.filter((item) => item.activetrade === true);
     } else if (this.searchTrade === 'false') {
       result = result.filter((item) => item.activetrade === false);
     }
 
-    // Filtro spaziale: attivo SOLO se è selezionata una città nel filtro.
-    // Il centro è sempre la città filtrata; senza città il raggio non si applica.
-    if (this.searchRadius > 0) {
+    // --- RAGGIO: attivo SOLO se c'è una città ---
+    if (this.searchRadius > 0 && this.searchCity) {
       result = result.filter((item) => {
         const dto = this.toItemDto(item);
         if (dto.latitude == null || dto.longitude == null) return false;
@@ -259,13 +271,13 @@ export class LastItemsComponent implements OnInit {
 
     this.filteredItems = result;
 
-    // Aggiorna gli items per la mappa in base ai filtri attivi
+    // --- Aggiorna markers ---
     this.mapItems = this.filteredItems.map((item) => this.toItemDto(item));
 
-    // Cerchio sulla mappa: visibile solo se c'è sia una città che un raggio
+    // --- Cerchio sulla mappa ---
     this.mapComponent?.setRadiusCircle(
-      this.searchRadius > 0 ? this.userLat : null,
-      this.searchRadius > 0 ? this.userLng : null,
+      this.searchRadius > 0 && this.searchCity ? this.userLat : null,
+      this.searchRadius > 0 && this.searchCity ? this.userLng : null,
       this.searchRadius,
     );
   }
