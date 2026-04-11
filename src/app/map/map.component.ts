@@ -8,6 +8,7 @@ import {
 import * as Leaflet from 'leaflet';
 import 'leaflet.markercluster';
 import { ItemDto } from '../model/item-dto.model';
+import { Router } from '@angular/router';
 
 // Forza TypeScript a trattare L come any, evitando errori su markerClusterGroup
 declare var L: any;
@@ -33,6 +34,8 @@ Leaflet.Marker.prototype.options.icon = iconDefault;
 })
 export class MapComponent implements AfterViewInit, OnChanges {
   @Input() items: ItemDto[] = [];
+
+  constructor(private router: Router) {}
 
   private map: any;
   private markersLayer: any;
@@ -123,13 +126,27 @@ export class MapComponent implements AfterViewInit, OnChanges {
             `<div style="margin-bottom:6px;">` +
             `<strong>${this.escapeHtml(item.lockerpoint)}</strong><br>` +
             `${this.escapeHtml(item.title)}<br>` +
-            `<a href="/item/${item.id}" style="display:inline-block;margin-top:4px;padding:4px 12px;background:#43b600;color:#fff;border:none;border-radius:4px;cursor:pointer;text-decoration:none;font-size:14px;">Prenota</a>` +
+            `<button id="popup-book-${item.id}"
+          style="display:inline-block;margin-top:4px;padding:4px 12px;background:#43b600;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:14px;">
+        Prenota
+      </button>` +
             `</div>`,
         )
         .join('<hr>');
 
       const marker = L.marker([lat, lng]).bindPopup(popupContent);
       this.markersLayer.addLayer(marker);
+
+      marker.on('popupopen', () => {
+        groupedItems.forEach((item) => {
+          const btn = document.getElementById(`popup-book-${item.id}`);
+          if (btn) {
+            btn.addEventListener('click', () => {
+              this.router.navigate(['/item', item.id]);
+            });
+          }
+        });
+      });
     });
 
     // Fix visibilità: forza il ricalcolo delle dimensioni della mappa
